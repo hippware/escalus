@@ -1,0 +1,32 @@
+{"1.1.0",
+[{<<"base16">>,{pkg,<<"base16">>,<<"1.0.0">>},0},
+ {<<"exml">>,
+  {git,"https://github.com/esl/exml",
+       {ref,"75ad4e8fcdf4b6180172ccf9c55b534e7cf17f6a"}},
+  0},
+ {<<"fusco">>,
+  {git,"https://github.com/esl/fusco",
+       {ref,"0c2442b236e99b2564e35a76c7e86168917c052e"}},
+  0},
+ {<<"hamcrest">>,
+  {git,"https://github.com/basho/hamcrest-erlang.git",
+       {ref,"98bc7aa19ea081478c816824aa05fc5a48acae66"}},
+  1},
+ {<<"meck">>,{pkg,<<"meck">>,<<"0.8.4">>},0},
+ {<<"mustache">>,
+  {git,"https://github.com/mojombo/mustache.erl",
+       {ref,"031c7aa302810424c198aa003aa8cf090150b555"}},
+  0},
+ {<<"wsecli">>,
+  {git,"https://github.com/esl/wsecli",
+       {ref,"a89054cf71c5ee9e780998e5acb2a78fd3419dd9"}},
+  0},
+ {<<"wsock">>,
+  {git,"https://github.com/esl/wsock",
+       {ref,"251e18b80c018bb5a6e2f1bbd9bcfcc92e1d9383"}},
+  1}]}.
+[
+{pkg_hash,[
+ {<<"base16">>, <<"283644E2B21BD5915ACB7178BED7851FB07C6E5749B8FAD68A53C501092176D9">>},
+ {<<"meck">>, <<"59CA1CD971372AA223138EFCF9B29475BDE299E1953046A0C727184790AB1520">>}]}
+].
