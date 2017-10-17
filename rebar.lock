@@ -1,5 +1,9 @@
 {"1.1.0",
 [{<<"base16">>,{pkg,<<"base16">>,<<"1.0.0">>},0},
+ {<<"cowlib">>,
+  {git,"https://github.com/ninenines/cowlib",
+       {ref,"bd37be4d3b065600c3b76b492535e76e5d413fc1"}},
+  1},
  {<<"exml">>,
   {git,"https://github.com/esl/exml",
        {ref,"75ad4e8fcdf4b6180172ccf9c55b534e7cf17f6a"}},
@@ -7,6 +11,10 @@
  {<<"fusco">>,
   {git,"https://github.com/esl/fusco",
        {ref,"0c2442b236e99b2564e35a76c7e86168917c052e"}},
+  0},
+ {<<"gun">>,
+  {git,"https://github.com/ninenines/gun",
+       {ref,"0fe54af72b81fdb198a377198d7f3a91f9ad6d7c"}},
   0},
  {<<"hamcrest">>,
   {git,"https://github.com/basho/hamcrest-erlang.git",
@@ -17,6 +25,12 @@
   {git,"https://github.com/mojombo/mustache.erl",
        {ref,"031c7aa302810424c198aa003aa8cf090150b555"}},
   0},
+ {<<"quickrand">>,{pkg,<<"quickrand">>,<<"1.7.2">>},1},
+ {<<"ranch">>,
+  {git,"https://github.com/ninenines/ranch",
+       {ref,"70f9696b6c35d029ac7bce67485713aee3983917"}},
+  1},
+ {<<"uuid">>,{pkg,<<"uuid_erl">>,<<"1.7.2">>},0},
  {<<"wsecli">>,
   {git,"https://github.com/esl/wsecli",
        {ref,"a89054cf71c5ee9e780998e5acb2a78fd3419dd9"}},
@@ -28,5 +42,7 @@
 [
 {pkg_hash,[
  {<<"base16">>, <<"283644E2B21BD5915ACB7178BED7851FB07C6E5749B8FAD68A53C501092176D9">>},
- {<<"meck">>, <<"59CA1CD971372AA223138EFCF9B29475BDE299E1953046A0C727184790AB1520">>}]}
+ {<<"meck">>, <<"59CA1CD971372AA223138EFCF9B29475BDE299E1953046A0C727184790AB1520">>},
+ {<<"quickrand">>, <<"E856F3C69FEC00D1ACCA8E56CB452B650E838D3A9720811410F439121EFAFE59">>},
+ {<<"uuid">>, <<"D596C8DD01A4AE48B9D8D51832CCC8F8302BF67ACD01336AEC3FCFAE6B9D2BC2">>}]}
 ].

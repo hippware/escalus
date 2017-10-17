@@ -20,6 +20,7 @@
 -export([story/3,
          make_everyone_friends/1,
          make_everyone_friends/2,
+         make_all_clients_friends/1,
          start_ready_clients/2,
          send_initial_presence/1]).
 
@@ -39,15 +40,17 @@ story(ConfigIn, ResourceCounts, Story) ->
         apply_w_arity_check(Story, Clients),
         escalus_event:story_end(Config),
         post_story_checks(Config, Clients),
-        escalus_server:post_story(Config)
+        escalus_server:post_story(Config),
+        stop_clients(ConfigIn)
     catch Class:Reason ->
         Stacktrace = erlang:get_stacktrace(),
         escalus_event:print_history(ConfigIn),
         erlang:raise(Class, Reason, Stacktrace)
     after
-        escalus_cleaner:clean(ConfigIn)
+        kill_client_connections(ConfigIn)
     end.
 
+-spec make_everyone_friends(escalus:config()) -> escalus:config().
 make_everyone_friends(Config) ->
     Users = escalus_config:get_config(escalus_users, Config),
     make_everyone_friends(Config, Users).
@@ -57,6 +60,17 @@ make_everyone_friends(Config0, Users) ->
     Config1 = escalus_cleaner:start(Config0),
     Clients = start_clients(Config1, [[{US, <<"friendly">>}] || {_Name, US} <- Users]),
 
+    make_all_clients_friends(Clients),
+
+    % stop the clients
+    stop_clients(Config1),
+    escalus_cleaner:stop(Config1),
+
+    % return Config0
+    [{everyone_is_friends, true} | Config0].
+
+-spec make_all_clients_friends(Clients :: [escalus:client()]) -> ok.
+make_all_clients_friends(Clients) ->
     % exchange subscribe and subscribed stanzas
     escalus_utils:distinct_pairs(fun(C1, C2) ->
         send_presence(C1, <<"subscribe">>, C2),
@@ -73,14 +87,7 @@ make_everyone_friends(Config0, Users) ->
         swallow_stanzas(C2, 1, 2)
     end, Clients),
 
-    ensure_all_clean(Clients),
-
-    % stop the clients
-    escalus_cleaner:clean(Config1),
-    escalus_cleaner:stop(Config1),
-
-    % return Config0
-    [{everyone_is_friends, true} | Config0].
+    ensure_all_clean(Clients).
 
 call_start_ready_clients(Config, UserCDs) ->
     escalus_overridables:do(Config, start_ready_clients, [Config, UserCDs],
@@ -138,6 +145,14 @@ start_clients(Config, ClientDescs) ->
                 call_start_ready_clients(Config, UserCDs)
             end, ClientDescs)
     end.
+
+stop_clients(Config) ->
+    Clients = escalus_cleaner:get_clients(Config),
+    lists:foreach(fun(Client) -> escalus_client:stop(Config, Client) end, Clients).
+
+kill_client_connections(Config) ->
+    Clients = escalus_cleaner:get_clients(Config),
+    lists:foreach(fun(Client) -> escalus_client:kill_connection(Config, Client) end, Clients).
 
 drop_presences(Client, N) ->
     Dropped = escalus_client:wait_for_stanzas(Client, N),
