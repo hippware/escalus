@@ -111,7 +111,7 @@ write_events(Events, OutFileName) ->
     file:close(FD).
 
 ensure_xv_browser_copied(OutFileName) ->
-    From = filename:join(code:lib_dir(escalus), "thirdparty/xmlview/xv-browser.xsl"),
+    From = filename:join(code:priv_dir(escalus), "xmlview/xv-browser.xsl"),
     %% To ct_reports root
     To = filename:join(filename:dirname(OutFileName), "../../../../xv-browser.xsl"),
     ensure_copied(From, To).
